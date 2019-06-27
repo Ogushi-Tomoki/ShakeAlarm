@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.util.TimerTask;
 import java.text.SimpleDateFormat;
 
 public class AlarmNortificationActivity extends AppCompatActivity implements SensorEventListener, Runnable {
+    //タイマー関連
     private Handler timerhandler = new Handler();
     private Runnable runnable = new Runnable() {
         @Override
@@ -34,12 +36,20 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
     private SimpleDateFormat dataFormat = new SimpleDateFormat("mm:ss.S", Locale.US);
     private int count, period;
 
+    //シェイクゲージ
+    private ProgressBar bar;
+
+    //mp3音源
     private MediaPlayer mp;
 
+    //加速度表示
     private TextView infoView;
+    private TextView timeView;
 
+    //タイマーを止めるのに振り続けなければいけない時間（秒）
     private static final int shakeTime = 6;
 
+    //センサー関連
     private final static long GRAPH_REFRESH_PERIOD_MS = 20;
     private static final float ALPHA = 0.75f;
 
@@ -68,6 +78,7 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
     private double accelerationMAX;
     private long prevTimestamp;
 
+    //タイマーが起動しているか否か
     private boolean shakeflag;
 
     private int delay = SensorManager.SENSOR_DELAY_NORMAL;
@@ -89,7 +100,12 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
         timerText = findViewById(R.id.timer);
         timerText.setText(dataFormat.format(shakeTime * 10 * period));
 
-//        myAlarmManager = new MyAlarmManager(this);
+        timeView = findViewById(R.id.time_view);
+        timeView.setText(getString(R.string.time_format, shakeTime));
+
+        bar = findViewById(R.id.progressBar);
+        bar.setMax(100);
+        bar.setProgress(0);
 
         //スクリーンロックを解除する
         //権限が必要
@@ -123,6 +139,9 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
         if (mp == null) {
             //resのrawディレクトリにtest.mp3を置いてある
             mp = MediaPlayer.create(this, R.raw.test);
+
+            //ループ設定
+            mp.setLooping(true);
         }
 
         mp.start();
@@ -234,6 +253,17 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
             accelerationMAX = weighted_acceleration;
         }
 
+        //プログレスバーを更新
+        if(moving_acceleration > 500) {
+            bar.setProgress(100);
+        } else if(moving_acceleration > 100) {
+            bar.setProgress(50 + (int) (moving_acceleration - 100)/8);
+        } else if(moving_acceleration > 30) {
+            bar.setProgress(25 + (int)(moving_acceleration - 30) * 25 / 70);
+        } else {
+            bar.setProgress((int)(moving_acceleration * 25 / 30));
+        }
+
         //重み付き平均加速度が500を超えたらタイマー起動
         if(weighted_acceleration >= 400 && moving_acceleration >= 100 && !shakeflag) {
 //            Toast.makeText(getApplicationContext(), "タイマー始動！", Toast.LENGTH_LONG).show();
@@ -257,7 +287,7 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
 
     @Override
     public void run() {
-        infoView.setText(getString(R.string.info_format, weighted_acceleration, moving_acceleration, accelerationMAX));
+        infoView.setText(getString(R.string.info_format, moving_acceleration));
 
         //タイマーが6秒を超えたら
         if(count >= shakeTime * 10) {

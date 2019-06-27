@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--<Button-->
-    <!--android:id="@+id/button"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:onClick="stopAlarm"-->
-    <!--android:text="stop alarm"-->
-    <!--app:layout_constraintTop_toBottomOf="@+id/timer_setting"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"/>-->
     <Button
         android:id="@+id/timer_now"
         android:layout_width="wrap_content"
@@ -26,6 +15,19 @@
         android:onClick="nowTimer"
         android:text="now timer!"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/setting_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/setting_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textColor="#ffffff"
+        android:textSize="80sp"
+        android:background="@drawable/frame_style"
+        app:layout_constraintTop_toBottomOf="@+id/timer_now"
         app:layout_constraintBottom_toTopOf="@+id/timer_setting"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -37,19 +39,8 @@
         android:layout_centerInParent="true"
         android:onClick="settingTimer"
         android:text="set timer"
-        app:layout_constraintTop_toBottomOf="@+id/timer_now"
-        app:layout_constraintBottom_toTopOf="@+id/setting_time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/setting_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:textColor="#00f"
-        android:textSize="60sp"
-        app:layout_constraintTop_toBottomOf="@+id/timer_setting"
+        android:background="@drawable/button_style"
+        app:layout_constraintTop_toBottomOf="@+id/setting_time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
