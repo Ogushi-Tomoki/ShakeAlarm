@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ShakeUP×WakeUP</string>
+    <string name="initial_info_label">(info)</string>
+    <string name="info_format">weighted_acceleration: %.1f\nmoving_acceleration: %.1f\naccelerationMAX: %.1f</string>
+</resources>
