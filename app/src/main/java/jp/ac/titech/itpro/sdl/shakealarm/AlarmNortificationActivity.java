@@ -123,8 +123,6 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
         }
         sensor = manager.getDefaultSensor(type);
         if (sensor == null) {
-//            String text = getString(R.string.toast_no_sensor_available, sensorTypeName(type));
-//            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -165,9 +163,6 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
     protected void onResume() {
         Log.d(TAG, "onResume in" + Thread.currentThread());
         super.onResume();
-//        alarmNowText = (TextView) findViewById(R.id.alarm_now_time);
-//        handler.sendEmptyMessage(WHAT);
-        // mam.stopAlarm();
         manager.registerListener(this, sensor, delay);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -177,38 +172,12 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
         }, 0, GRAPH_REFRESH_PERIOD_MS);
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        manager.unregisterListener(this);
-//    }
-
     public void stopAlarm(View v) {
         initSetting();
         stopAndRelease();
         Intent intent = new Intent(AlarmNortificationActivity.this, MainActivity.class);
         startActivity(intent);
     }
-
-//    public void settingTimer(View v) {
-//        Calendar calendar = Calendar.getInstance();
-//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        int minute = calendar.get(Calendar.MINUTE);
-//        TimePickerDialog dialog = new TimePickerDialog(
-//                this,
-//                new TimePickerDialog.OnTimeSetListener() {
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//                        Log.d("setting time is ", String.format("%02d:%02d", hourOfDay, minute));
-//                        myAlarmManager.addAlarm(hourOfDay, minute);
-//                    }
-//                },
-//                hour,
-//                minute,
-//                true
-//        );
-//        dialog.show();
-//    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -266,12 +235,10 @@ public class AlarmNortificationActivity extends AppCompatActivity implements Sen
 
         //重み付き平均加速度が500を超えたらタイマー起動
         if(weighted_acceleration >= 400 && moving_acceleration >= 100 && !shakeflag) {
-//            Toast.makeText(getApplicationContext(), "タイマー始動！", Toast.LENGTH_LONG).show();
             timerhandler.post(runnable);
             shakeflag = true;
             //移動平均加速度が100を下回ったらタイマー停止
         } else if(moving_acceleration < 30 && shakeflag) {
-//            Toast.makeText(getApplicationContext(), "残念！もう1回！", Toast.LENGTH_LONG).show();
             timerhandler.removeCallbacks(runnable);
             timerText.setText(dataFormat.format(shakeTime * 10 * period));
             count = 0;

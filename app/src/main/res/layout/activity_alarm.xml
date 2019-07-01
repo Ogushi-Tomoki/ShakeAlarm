@@ -53,32 +53,20 @@
         android:textSize="100sp"
         android:background="@drawable/timer_style"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:onClick="stopAlarm"
-        android:text="stop alarm"
-        app:layout_constraintTop_toBottomOf="@+id/timer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <!--<Button-->
-    <!--android:id="@+id/timer_setting"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerInParent="true"-->
-    <!--android:onClick="settingTimer"-->
-    <!--android:text="set timer"-->
-    <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--app:layout_constraintBottom_toTopOf="@+id/button"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"/>-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:onClick="stopAlarm"-->
+        <!--android:text="stop alarm"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/timer"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"/>-->
 
 </android.support.constraint.ConstraintLayout>
